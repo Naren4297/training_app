@@ -1,0 +1,11 @@
+.row-border {
+    border: 1px solid transparent;
+    padding: 10px;
+    margin: 5px 0;
+  }
+
+  .scrollable-card-content {
+    max-height: 150px; /* Set the desired fixed height */
+    min-height: 150px;
+    overflow-y: auto; /* Enable vertical scrolling */
+  }

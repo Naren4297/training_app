@@ -1,0 +1,112 @@
+const http = require("http");
+const path = require("path");
+const dotenv = require("dotenv");
+const express = require("express");
+const socketIo = require('socket.io');
+const debug = require("debug")("server");
+const cors = require('cors');
+const apiRoutes = require('../index'); 
+const db = require("../src/config/db.config");
+
+// Reading .env before initialize.
+dotenv.config({ path: path.join(__dirname, ".env") });
+
+// Get port from environment and store in Express.
+const PORT = normalizePort(process.env.PORT || "5000");
+
+// Assigning the variable app to express
+const app = express();
+app.use(cors()); // Enable CORS
+
+// Synchronizing the database and forcing it to false so we don't lose data
+db.sequelize.sync({alter: true}).then(() => {
+	console.log("db has been re sync");
+  });
+  const createDefaultGroups = db.createDefaultGroups;
+  createDefaultGroups(db.groups);
+// Middleware registration
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+// Create HTTP server.
+const server = http.createServer(app);
+
+const io = socketIo(server, {
+  cors: {
+    origin: 'http://localhost:3000', 
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type'],
+    credentials: true
+  }
+});
+
+// Attach io to the request object
+app.use((req, res, next) => {
+  console.log("Before attaching io");
+  req.io = io;
+  next();
+});
+
+// Mount API routes
+app.use('/api', apiRoutes);
+
+server.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
+server.on("error", onError);
+server.on("listening", onListening);
+
+io.on('connection', (socket) => {
+  console.log('New client connected');
+  socket.on('register', (empID) => {
+    socket.join(empID);
+    console.log(`User with empID ${empID} joined room ${empID}`);
+  });
+
+  socket.on('disconnect', () => {
+    console.log('Client disconnected');
+  });
+});
+
+// Normalize a port into a number, string, or false.
+function normalizePort(val) {
+  const port = parseInt(val, 10);
+
+  if (isNaN(port)) {
+    // Named pipe
+    return val;
+  }
+
+  if (port >= 0) {
+    return port;
+  }
+
+  return false;
+}
+
+// Event listener for HTTP server "error" event.
+function onError(error) {
+  if (error.syscall !== "listen") {
+    throw error;
+  }
+
+  switch (error.code) {
+    case "EACCES":
+      console.error(bind + " requires elevated privileges");
+      process.exit(1);
+      break;
+    case "EADDRINUSE":
+      console.error(bind + " is already in use");
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+// Event listener for HTTP server "listening" event.
+function onListening() {
+  const addr = server.address();
+  const bind = typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
+  debug("Listening on " + bind);
+}

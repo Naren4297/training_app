@@ -1,0 +1,39 @@
+.notification-container {
+    max-height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden; /* Hide horizontal scroll */
+  }
+  
+  .notification-container::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .notification-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  .notification-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+  }
+  
+  .notification-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+  
+  .notification-item {
+    cursor: pointer;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    background-color: #fff;
+  }
+  
+  .notification-item.read {
+    background-color: transparent;
+    color: grey; /* Grey out the font for read notifications */
+  }
+  
+  :where(.css-dev-only-do-not-override-161f05s).ant-menu-dark .ant-menu-item-selected, 
+  :where(.css-dev-only-do-not-override-161f05s).ant-menu-dark > .ant-menu .ant-menu-item-selected {
+      background-color: transparent !important; /* Ensure the background is transparent */
+  }
