@@ -178,3 +178,58 @@ npm install
   ```
 - Open your browser and navigate to:
   -   ```bash http://localhost:3000 ```
+
+## **Screenshots**
+
+- Landing Page
+  
+  ![Home Page](images/LandingPage.PNG)
+
+- Admin - Group Page
+  
+  ![Admin's Group Page](images/admin_group.PNG)
+
+  - Coordinators - Group Page
+  
+  ![](images/coordinator_group.PNG)
+
+  -  Trainers - Group Page
+  
+  ![](images/trainers_group.PNG)
+
+  - Batches page
+  
+  ![](images/training_batches.PNG)
+
+    - Bulk insertion of batches
+  
+  ![](images/Batch_edit_bulkinsert.PNG)
+  
+  - Program Management
+  
+  ![](images/trainingprogrampage.PNG)
+
+  - Program assignment
+  
+  ![](images/programassignmetn.PNG)
+
+  - Upload Training Materials
+  
+  ![](images/uploadtrainingdata.PNG)
+
+
+  - Manage Assessments
+  
+  ![](images/assesments_list.PNG)
+
+  - Q&A Dataset
+  
+  ![](images/viewdataset.PNG)
+
+    - Assessments Report
+  
+  ![](images/viewassementreport.PNG)
+
+    - Assessment Metrics
+  
+  ![](images/assessment_metrics.PNG)
